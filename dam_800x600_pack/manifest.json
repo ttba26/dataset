@@ -1,0 +1,212 @@
+[
+  {
+    "id": "US-AMZ-PBDD-2025",
+    "file": "US-AMZ-PBDD-2025.jpg",
+    "merchant": "Amazon (US)",
+    "title": "Prime Big Deal Days — Oct 7–8",
+    "country": "US"
+  },
+  {
+    "id": "US-WMT-KICKOFF-2025",
+    "file": "US-WMT-KICKOFF-2025.jpg",
+    "merchant": "Walmart",
+    "title": "Deals Holiday Kickoff — Oct 7–10",
+    "country": "US"
+  },
+  {
+    "id": "US-TGT-CIRCLEWEEK-2025",
+    "file": "US-TGT-CIRCLEWEEK-2025.jpg",
+    "merchant": "Target",
+    "title": "Target Circle Week — Oct 6–12",
+    "country": "US"
+  },
+  {
+    "id": "US-HD-HALLOWEEN-2025",
+    "file": "US-HD-HALLOWEEN-2025.jpg",
+    "merchant": "The Home Depot",
+    "title": "Halloween & Fall Savings",
+    "country": "US"
+  },
+  {
+    "id": "US-KOHLS-DEALDASH-2025",
+    "file": "US-KOHLS-DEALDASH-2025.jpg",
+    "merchant": "Kohl’s",
+    "title": "Deal Dash — Weekly Savings",
+    "country": "US"
+  },
+  {
+    "id": "US-MACYS-ODS-2025",
+    "file": "US-MACYS-ODS-2025.jpg",
+    "merchant": "Macy’s",
+    "title": "Ultimate One Day Sale (October)",
+    "country": "US"
+  },
+  {
+    "id": "HK-TIMESSQUARE-4REWARDS-2025",
+    "file": "HK-TIMESSQUARE-4REWARDS-2025.jpg",
+    "merchant": "Times Square HK",
+    "title": "Shop for Love — 4 Big Rewards",
+    "country": "HK"
+  },
+  {
+    "id": "HK-K11-ALIPAY-PRIV-2025",
+    "file": "HK-K11-ALIPAY-PRIV-2025.jpg",
+    "merchant": "K11 MUSEA",
+    "title": "AlipayHK × K11 MUSEA Privileges",
+    "country": "HK"
+  },
+  {
+    "id": "HK-HYSAN-HALLOWEEN-2025",
+    "file": "HK-HYSAN-HALLOWEEN-2025.jpg",
+    "merchant": "Lee Gardens",
+    "title": "Halloween Trick‑or‑Treat @ Lee Gardens",
+    "country": "HK"
+  },
+  {
+    "id": "HK-HKEXPRESS-AUTUMN-2025",
+    "file": "HK-HKEXPRESS-AUTUMN-2025.jpg",
+    "merchant": "HK Express",
+    "title": "Autumn to Shine — Fare Deals",
+    "country": "HK"
+  },
+  {
+    "id": "HK-HKA-WOWWEEK-2025",
+    "file": "HK-HKA-WOWWEEK-2025.jpg",
+    "merchant": "Hong Kong Airlines",
+    "title": "WOW Week — Seasonal Offers",
+    "country": "HK"
+  },
+  {
+    "id": "HK-WINEDINE-2025",
+    "file": "HK-WINEDINE-2025.jpg",
+    "merchant": "HKTB Wine & Dine Festival",
+    "title": "Wine & Dine Festival — Oct 23–26",
+    "country": "HK"
+  },
+  {
+    "id": "JP-AMZ-PBDD-2025",
+    "file": "JP-AMZ-PBDD-2025.jpg",
+    "merchant": "Amazon (JP)",
+    "title": "Prime Big Deal Days — Oct 7–8",
+    "country": "JP"
+  },
+  {
+    "id": "JP-BICCAMERA-10X-2025",
+    "file": "JP-BICCAMERA-10X-2025.jpg",
+    "merchant": "BIC CAMERA (Rakuten)",
+    "title": "ポイント10倍 — 10/4–10/9",
+    "country": "JP"
+  },
+  {
+    "id": "JP-TAKASHIMAYA-PTS-2025",
+    "file": "JP-TAKASHIMAYA-PTS-2025.jpg",
+    "merchant": "Takashimaya Fashion Square",
+    "title": "+5% ポイントアップ — 10/14–10/31",
+    "country": "JP"
+  },
+  {
+    "id": "JP-ISETAN-APP-2025",
+    "file": "JP-ISETAN-APP-2025.jpg",
+    "merchant": "Isetan Mitsukoshi",
+    "title": "アプリ新規登録で1,000円相当進呈",
+    "country": "JP"
+  },
+  {
+    "id": "JP-LOFT-2025AW-2025",
+    "file": "JP-LOFT-2025AW-2025.jpg",
+    "merchant": "LOFT",
+    "title": "コスメフェスティバル 2025AW — 〜10/10",
+    "country": "JP"
+  },
+  {
+    "id": "JP-RAKUTEN-FAV-COUPON-2025",
+    "file": "JP-RAKUTEN-FAV-COUPON-2025.jpg",
+    "merchant": "Rakuten",
+    "title": "お気に入り登録でクーポン — 10/17–10/22",
+    "country": "JP"
+  },
+  {
+    "id": "SG-ION-F1-2025",
+    "file": "SG-ION-F1-2025.jpg",
+    "merchant": "ION Orchard",
+    "title": "Live the Race — 15 Sep–12 Oct",
+    "country": "SG"
+  },
+  {
+    "id": "SG-ION-TAXFREE-2025",
+    "file": "SG-ION-TAXFREE-2025.jpg",
+    "merchant": "ION Orchard",
+    "title": "Tourist Privileges — till 31 Oct",
+    "country": "SG"
+  },
+  {
+    "id": "SG-ION-VISA-2025",
+    "file": "SG-ION-VISA-2025.jpg",
+    "merchant": "ION Orchard × Visa",
+    "title": "Exclusive Visa Privileges — till 31 Oct",
+    "country": "SG"
+  },
+  {
+    "id": "SG-SIA-GE-2025",
+    "file": "SG-SIA-GE-2025.jpg",
+    "merchant": "Singapore Airlines",
+    "title": "Great Escapes — Book by 15 Oct",
+    "country": "SG"
+  },
+  {
+    "id": "SG-JEWEL-ART-2025",
+    "file": "SG-JEWEL-ART-2025.jpg",
+    "merchant": "Jewel Changi Airport",
+    "title": "Outdoor Art Experience — till 10 Oct",
+    "country": "SG"
+  },
+  {
+    "id": "SG-CAPITASTAR-14TH-2025",
+    "file": "SG-CAPITASTAR-14TH-2025.jpg",
+    "merchant": "CapitaStar",
+    "title": "14th Birthday — 2–31 Oct",
+    "country": "SG"
+  },
+  {
+    "id": "AU-MYER-TOYSALE-2025",
+    "file": "AU-MYER-TOYSALE-2025.jpg",
+    "merchant": "Myer",
+    "title": "Toy Sale Offers — ends 5 Oct",
+    "country": "AU"
+  },
+  {
+    "id": "AU-DJ-20OFF-2025",
+    "file": "AU-DJ-20OFF-2025.jpg",
+    "merchant": "David Jones",
+    "title": "20% off New‑In — till 12 Oct",
+    "country": "AU"
+  },
+  {
+    "id": "AU-AMZ-PBDD-2025",
+    "file": "AU-AMZ-PBDD-2025.jpg",
+    "merchant": "Amazon (AU)",
+    "title": "Prime Big Deal Days — Oct 7–13",
+    "country": "AU"
+  },
+  {
+    "id": "AU-QF-SHOP-CARD-2025",
+    "file": "AU-QF-SHOP-CARD-2025.jpg",
+    "merchant": "Qantas Shopping",
+    "title": "Link Card Offers — link by 13 Oct",
+    "country": "AU"
+  },
+  {
+    "id": "AU-QF-SHOP-HOME-2025",
+    "file": "AU-QF-SHOP-HOME-2025.jpg",
+    "merchant": "Qantas Shopping",
+    "title": "Refresh Your Home — ends 23 Oct",
+    "country": "AU"
+  },
+  {
+    "id": "AU-QF-STATUS-ONGROUND-2025",
+    "file": "AU-QF-STATUS-ONGROUND-2025.jpg",
+    "merchant": "Qantas",
+    "title": "Status on the Ground — register by 31 Oct",
+    "country": "AU"
+  }
+]
