@@ -1,0 +1,535 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>🌍 Promo Explorer — 5 Countries / 30 Offers</title>
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Minimal line clamp without Tailwind plugin */
+    .line-clamp-3 {
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body class="min-h-screen bg-gradient-to-b from-slate-50 to-white text-slate-900">
+  <header class="sticky top-0 z-10 backdrop-blur bg-white/70 border-b">
+    <div class="mx-auto max-w-7xl px-4 py-3 flex items-center gap-3">
+      <div class="text-xl font-semibold">🌍 Promo Explorer</div>
+      <div class="text-sm text-slate-500">5 Countries · 30 Offers · Oct 2025</div>
+      <div class="ml-auto flex items-center gap-3">
+        <input id="q" placeholder="搜索：商户 / 标题 / 关键词"
+               class="h-10 w-64 rounded-2xl border px-4 text-sm focus:outline-none focus:ring-2 focus:ring-sky-400" />
+        <select id="sort" class="h-10 rounded-2xl border px-3 text-sm" title="排序">
+          <option value="ending">按到期时间</option>
+          <option value="country">按国家</option>
+        </select>
+      </div>
+    </div>
+    <!-- Tabs: Country -->
+    <nav class="mx-auto max-w-7xl px-4 pb-3 flex flex-wrap gap-2" id="countryTabs"></nav>
+    <!-- Filters -->
+    <div class="mx-auto max-w-7xl px-4 pb-3 grid grid-cols-1 sm:grid-cols-3 gap-3">
+      <select id="type" class="h-10 rounded-2xl border px-3 text-sm"></select>
+      <select id="cat" class="h-10 rounded-2xl border px-3 text-sm"></select>
+      <div class="text-xs text-slate-500 self-center">提示：每个国家内，同一商户类别≤3个活动（样例已满足）</div>
+    </div>
+    <div id="devPanelMount"></div>
+  </header>
+
+  <main class="mx-auto max-w-7xl p-4 grid gap-4 md:grid-cols-2" id="cards"></main>
+
+  <footer class="mx-auto max-w-7xl p-6 text-xs text-slate-500">
+    数据来源：各品牌/商场/航司官网与新闻稿链接。图片来自内部 DAM（800×600 JPG 标准）。
+  </footer>
+
+  <script>
+    // ---------- Types as comments ----------
+    // Country = "HK" | "JP" | "US" | "SG" | "AU"
+    // OfferType = "折扣" | "满减" | "赠品" | "抽奖" | "会员" | "互动" | "补充"
+    // MerchantCategory = "电商" | "百货零售" | "商场/购物中心" | "航空/旅游" | "家居/家装" | "文化艺术" | "餐饮"
+    // OfferItem = { id, country, type, category, merchant, title, summary, validFrom, validTo|null, link, image }
+
+    // ---------- DAM helper ----------
+    function resolveDamBase() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        const q = params.get("dam");
+        if (q) return q.endsWith("/") ? q : q + "/";
+      } catch {}
+      const g = (typeof globalThis !== "undefined" ? globalThis : window);
+      if (g && typeof g.__DAM_BASE__ === "string" && g.__DAM_BASE__) {
+        return g.__DAM_BASE__.endsWith("/") ? g.__DAM_BASE__ : g.__DAM_BASE__ + "/";
+      }
+      return "http://merchant.ctt25.uk/dataset/"; // default fallback (with trailing slash)
+    }
+    const DAM_BASE = resolveDamBase();
+    const img = (id) => `${DAM_BASE}${id}.jpg`;
+
+    // ---------- Data (30 items; 6 per country) ----------
+    const OFFERS = [
+      // ————— USA (6) —————
+      {
+        id: "US-AMZ-PBDD-2025", country: "US", type: "折扣", category: "电商",
+        merchant: "Amazon (US)", title: "Prime Big Deal Days — Oct 7–8",
+        summary: "Two-day Prime members exclusive event across categories",
+        validFrom: "2025-10-07", validTo: "2025-10-08",
+        link: "https://press.aboutamazon.com/2025/9/everything-you-need-to-know-to-make-a-prime-big-deal-days-plan",
+        image: img("US-AMZ-PBDD-2025"),
+      },
+      {
+        id: "US-WMT-KICKOFF-2025", country: "US", type: "折扣", category: "百货零售",
+        merchant: "Walmart", title: "Deals Holiday Kickoff — Oct 7–10",
+        summary: "Season-starting deals across categories (online & stores)",
+        validFrom: "2025-10-07", validTo: "2025-10-10",
+        link: "https://corporate.walmart.com/news/2025/09/30/walmart-kicks-off-its-holiday-season-with-its-biggest-offer-events-yet",
+        image: img("US-WMT-KICKOFF-2025"),
+      },
+      {
+        id: "US-TGT-CIRCLEWEEK-2025", country: "US", type: "会员", category: "百货零售",
+        merchant: "Target", title: "Target Circle Week — Oct 6–12",
+        summary: "Members-only savings (free to join) across thousands of items",
+        validFrom: "2025-10-06", validTo: "2025-10-12",
+        link: "https://corporate.target.com/press/releases/2025/09/16503-Target-Circle-Week-returns-this-October-with-ave",
+        image: img("US-TGT-CIRCLEWEEK-2025"),
+      },
+      {
+        id: "US-HD-HALLOWEEN-2025", country: "US", type: "折扣", category: "家居/家装",
+        merchant: "The Home Depot", title: "Halloween & Fall Savings (seasonal)",
+        summary: "Seasonal décor & outdoor savings — Halloween shop",
+        validFrom: "2025-09-01", validTo: "2025-10-31",
+        link: "https://www.homedepot.com/c/halloween",
+        image: img("US-HD-HALLOWEEN-2025"),
+      },
+      {
+        id: "US-KOHLS-DEALDASH-2025", country: "US", type: "折扣", category: "百货零售",
+        merchant: "Kohl’s", title: "Deal Dash — Weekly Savings",
+        summary: "Rolling weekly offers; check current week in October",
+        validFrom: "2025-10-01", validTo: "2025-10-31",
+        link: "https://www.kohls.com/feature/deal-days.jsp",
+        image: img("US-KOHLS-DEALDASH-2025"),
+      },
+      {
+        id: "US-MACYS-ODS-2025", country: "US", type: "折扣", category: "百货零售",
+        merchant: "Macy’s", title: "Ultimate One Day Sale (October windows)",
+        summary: "Limited-time doorbusters — check active dates",
+        validFrom: "2025-10-01", validTo: "2025-10-31",
+        link: "https://www.macys.com/sale/one-day-sale/",
+        image: img("US-MACYS-ODS-2025"),
+      },
+
+      // ————— Hong Kong (6) —————
+      {
+        id: "HK-TIMESSQUARE-4REWARDS-2025", country: "HK", type: "满减", category: "商场/购物中心",
+        merchant: "Times Square HK", title: "Shop for Love — 4 Big Rewards",
+        summary: "Spend & eVoucher rewards, redemption tiers",
+        validFrom: "2025-09-06", validTo: "2025-10-06",
+        link: "https://timessquarehk.com/en/whats-new/shop-for-love-4-big-rewards/",
+        image: img("HK-TIMESSQUARE-4REWARDS-2025"),
+      },
+      {
+        id: "HK-K11-ALIPAY-PRIV-2025", country: "HK", type: "赠品", category: "商场/购物中心",
+        merchant: "K11 MUSEA", title: "AlipayHK × K11 MUSEA Privileges",
+        summary: "Payment-linked privileges & rewards at K11 MUSEA",
+        validFrom: "2025-09-01", validTo: "2025-10-31",
+        link: "https://www.k11musea.com/zh-hk/promo/alipayhk-exclusive-offers/",
+        image: img("HK-K11-ALIPAY-PRIV-2025"),
+      },
+      {
+        id: "HK-HYSAN-HALLOWEEN-2025", country: "HK", type: "互动", category: "商场/购物中心",
+        merchant: "Hysan Place / Fashion Walk", title: "Halloween Trick-or-Treat @ Lee Gardens",
+        summary: "Family trick-or-treat routes & activities (Sep–Oct)",
+        validFrom: "2025-09-12", validTo: "2025-10-31",
+        link: "https://www.leegardens.com.hk/en/whats-on/events/2025/trick-or-treat",
+        image: img("HK-HYSAN-HALLOWEEN-2025"),
+      },
+      {
+        id: "HK-HKEXPRESS-AUTUMN-2025", country: "HK", type: "折扣", category: "航空/旅游",
+        merchant: "HK Express", title: "Autumn to Shine — Fare Deals",
+        summary: "Limited-time fares to regional destinations",
+        validFrom: "2025-09-18", validTo: "2025-10-31",
+        link: "https://www.hkexpress.com/en-hk/promotions/autumn-to-shine/",
+        image: img("HK-HKEXPRESS-AUTUMN-2025"),
+      },
+      {
+        id: "HK-HKA-WOWWEEK-2025", country: "HK", type: "折扣", category: "航空/旅游",
+        merchant: "Hong Kong Airlines", title: "WOW Week — Seasonal Offers",
+        summary: "Airfare promotions & limited-time deals",
+        validFrom: "2025-10-01", validTo: "2025-10-31",
+        link: "https://www.hongkongairlines.com/en_HK/deals/wow-week",
+        image: img("HK-HKA-WOWWEEK-2025"),
+      },
+      {
+        id: "HK-WINEDINE-2025", country: "HK", type: "互动", category: "文化艺术",
+        merchant: "HKTB Wine & Dine Festival", title: "Wine & Dine Festival — Oct 23–26",
+        summary: "Ticketed gourmet & wine event at Central Harbourfront",
+        validFrom: "2025-10-23", validTo: "2025-10-26",
+        link: "https://www.discoverhongkong.com/hk-eng/what-s-new/events/wine-dine-festival/ticketing.html",
+        image: img("HK-WINEDINE-2025"),
+      },
+
+      // ————— Japan (6) —————
+      {
+        id: "JP-AMZ-PBDD-2025", country: "JP", type: "折扣", category: "电商",
+        merchant: "Amazon (JP)", title: "Prime Big Deal Days — Oct 7–8",
+        summary: "Prime members event in Japan (global announcement)",
+        validFrom: "2025-10-07", validTo: "2025-10-08",
+        link: "https://press.aboutamazon.com/2025/9/everything-you-need-to-know-to-make-a-prime-big-deal-days-plan",
+        image: img("JP-AMZ-PBDD-2025"),
+      },
+      {
+        id: "JP-BICCAMERA-10X-2025", country: "JP", type: "会员", category: "电商",
+        merchant: "BIC CAMERA (Rakuten Ichiba)", title: "ポイント10倍 — 10/4–10/9",
+        summary: "BIC CAMERA ラクテン市場店 ポイント10倍キャンペーン",
+        validFrom: "2025-10-04", validTo: "2025-10-09",
+        link: "https://event.rakuten.co.jp/campaign/point-up/4shop/pt10/",
+        image: img("JP-BICCAMERA-10X-2025"),
+      },
+      {
+        id: "JP-TAKASHIMAYA-PTS-2025", country: "JP", type: "会员", category: "电商",
+        merchant: "Takashimaya Fashion Square", title: "+5% ポイントアップ — 10/14–10/31",
+        summary: "会員限定ポイントアップ（対象ショップ）",
+        validFrom: "2025-10-14", validTo: "2025-10-31",
+        link: "https://fs.takashimaya.co.jp/news/10432/",
+        image: img("JP-TAKASHIMAYA-PTS-2025"),
+      },
+      {
+        id: "JP-ISETAN-APP-2025", country: "JP", type: "赠品", category: "百货零售",
+        merchant: "Isetan Mitsukoshi", title: "アプリ新規登録で1,000円相当進呈",
+        summary: "10/1/2025–3/31/2026 新規会員向け特典",
+        validFrom: "2025-10-01", validTo: "2026-03-31",
+        link: "https://www.mistore.jp/app/enjoy/campaign.html",
+        image: img("JP-ISETAN-APP-2025"),
+      },
+      {
+        id: "JP-LOFT-2025AW-2025", country: "JP", type: "互动", category: "百货零售",
+        merchant: "LOFT", title: "コスメフェスティバル 2025AW — 〜10/10",
+        summary: "シーズナル企画・対象商品プロモーション",
+        validFrom: "2025-09-01", validTo: "2025-10-10",
+        link: "https://www.loft.co.jp/cof2025aw/",
+        image: img("JP-LOFT-2025AW-2025"),
+      },
+      {
+        id: "JP-RAKUTEN-FAV-COUPON-2025", country: "JP", type: "会员", category: "电商",
+        merchant: "Rakuten", title: "お気に入り登録でクーポン — 10/17–10/22",
+        summary: "スケジュール：お気に入り登録応援クーポン",
+        validFrom: "2025-10-17", validTo: "2025-10-22",
+        link: "https://event.rakuten.co.jp/campaign/schedule/#sche10-17-5",
+        image: img("JP-RAKUTEN-FAV-COUPON-2025"),
+      },
+
+      // ————— Singapore (6) —————
+      {
+        id: "SG-ION-F1-2025", country: "SG", type: "互动", category: "商场/购物中心",
+        merchant: "ION Orchard", title: "Live the Race — 15 Sep–12 Oct",
+        summary: "F1-themed experiences, rewards & gifts across the mall",
+        validFrom: "2025-09-15", validTo: "2025-10-12",
+        link: "https://www.ionorchard.com/en/whats-on/deals-deals-more/ION-Live-The-Race.html",
+        image: img("SG-ION-F1-2025"),
+      },
+      {
+        id: "SG-ION-TAXFREE-2025", country: "SG", type: "赠品", category: "商场/购物中心",
+        merchant: "ION Orchard", title: "Tourist Privileges (GST-free onboarding) — till 31 Oct",
+        summary: "Tourist program with onboarding perks and vouchers",
+        validFrom: "2025-09-01", validTo: "2025-10-31",
+        link: "https://www.ionorchard.com/en/whats-on/deals-deals-more/tax-free.html",
+        image: img("SG-ION-TAXFREE-2025"),
+      },
+      {
+        id: "SG-ION-VISA-2025", country: "SG", type: "会员", category: "商场/购物中心",
+        merchant: "ION Orchard × Visa", title: "Exclusive Visa Privileges — till 31 Oct",
+        summary: "Card-linked spend & redeem at ION Orchard",
+        validFrom: "2025-09-01", validTo: "2025-10-31",
+        link: "https://www.ionorchard.com/en/whats-on/deals-deals-more/ION-Exclusive-Visa-Privileges.html",
+        image: img("SG-ION-VISA-2025"),
+      },
+      {
+        id: "SG-SIA-GE-2025", country: "SG", type: "折扣", category: "航空/旅游",
+        merchant: "Singapore Airlines", title: "Great Escapes — Book by 15 Oct",
+        summary: "Selected destinations on sale; limited availability",
+        validFrom: "2025-09-30", validTo: "2025-10-15",
+        link: "https://www.singaporeair.com/en_UK/sg/specialoffers/specialofferslisting/",
+        image: img("SG-SIA-GE-2025"),
+      },
+      {
+        id: "SG-JEWEL-ART-2025", country: "SG", type: "互动", category: "商场/购物中心",
+        merchant: "Jewel Changi Airport", title: "Jewel Outdoor Art — till 10 Oct",
+        summary: "Free family-friendly art & play installations",
+        validFrom: "2025-09-01", validTo: "2025-10-10",
+        link: "https://www.jewelchangiairport.com/en/whats-on/promotions/outdoor-jewel-art-experience.html",
+        image: img("SG-JEWEL-ART-2025"),
+      },
+      {
+        id: "SG-CAPITASTAR-14TH-2025", country: "SG", type: "抽奖", category: "商场/购物中心",
+        merchant: "CapitaStar", title: "CapitaStar 14th Birthday — 2–31 Oct",
+        summary: "Spin & Win, bonus STAR$ rewards across malls",
+        validFrom: "2025-10-02", validTo: "2025-10-31",
+        link: "https://www.capitastar.com/sg/en/stardeals/all-deals/capitaland-14th-birthday.html",
+        image: img("SG-CAPITASTAR-14TH-2025"),
+      },
+
+      // ————— Australia (6) —————
+      {
+        id: "AU-MYER-TOYSALE-2025", country: "AU", type: "折扣", category: "百货零售",
+        merchant: "Myer", title: "Toy Sale Offers — ends 5 Oct",
+        summary: "Catalogue & in-store toy offers; limited time",
+        validFrom: "2025-09-15", validTo: "2025-10-05",
+        link: "https://www.myer.com.au/whatson/toys/toys-offers",
+        image: img("AU-MYER-TOYSALE-2025"),
+      },
+      {
+        id: "AU-DJ-20OFF-2025", country: "AU", type: "折扣", category: "百货零售",
+        merchant: "David Jones", title: "20% off New-In — till 12 Oct",
+        summary: "Selected fashion, shoes & accessories",
+        validFrom: "2025-09-29", validTo: "2025-10-12",
+        link: "https://www.davidjones.com/offers",
+        image: img("AU-DJ-20OFF-2025"),
+      },
+      {
+        id: "AU-AMZ-PBDD-2025", country: "AU", type: "折扣", category: "电商",
+        merchant: "Amazon (AU)", title: "Prime Big Deal Days — Oct 7–13",
+        summary: "AU: 7 days of deals for Prime members",
+        validFrom: "2025-10-07", validTo: "2025-10-13",
+        link: "https://www.aboutamazon.com.au/news/retail/6-tips-to-shop-amazon-prime-big-deal-days",
+        image: img("AU-AMZ-PBDD-2025"),
+      },
+      {
+        id: "AU-QF-SHOP-CARD-2025", country: "AU", type: "会员", category: "航空/旅游",
+        merchant: "Qantas Shopping", title: "Link Card Offers — link by 13 Oct",
+        summary: "Bonus Qantas Points with linked Visa/Mastercard",
+        validFrom: "2025-09-20", validTo: "2025-10-13",
+        link: "https://www.qantas.com/au/en/frequent-flyer/shopping/card-offers.html",
+        image: img("AU-QF-SHOP-CARD-2025"),
+      },
+      {
+        id: "AU-QF-SHOP-HOME-2025", country: "AU", type: "会员", category: "航空/旅游",
+        merchant: "Qantas Shopping", title: "Refresh Your Home — ends 23 Oct",
+        summary: "Bonus points at home & lifestyle partners",
+        validFrom: "2025-10-01", validTo: "2025-10-23",
+        link: "https://www.qantas.com/au/en/frequent-flyer/shopping/offers/refresh-your-home.html",
+        image: img("AU-QF-SHOP-HOME-2025"),
+      },
+      {
+        id: "AU-QF-STATUS-ONGROUND-2025", country: "AU", type: "会员", category: "航空/旅游",
+        merchant: "Qantas", title: "Status on the Ground — register by 31 Oct",
+        summary: "Earn extra Status Credits via everyday spend",
+        validFrom: "2025-09-10", validTo: "2025-10-31",
+        link: "https://www.qantas.com/au/en/frequent-flyer/status-and-clubs/status-credits-offers.html#SOTG",
+        image: img("AU-QF-STATUS-ONGROUND-2025"),
+      },
+    ];
+
+    // ---------- UI Helpers ----------
+    const COUNTRY_NAMES = { HK: "中国香港", JP: "日本", US: "美国", SG: "新加坡", AU: "澳大利亚" };
+    const TYPES = ["折扣", "满减", "赠品", "抽奖", "会员", "互动", "补充"];
+    const CATEGORIES = ["电商","百货零售","商场/购物中心","航空/旅游","家居/家装","文化艺术","餐饮"];
+
+    const state = {
+      country: "ALL",
+      type: "ALL",
+      cat: "ALL",
+      q: "",
+      sortKey: "ending",
+      favs: new Set(),
+      debug: false,
+    };
+
+    function qs(id){ return document.getElementById(id); }
+
+    // Build country tabs
+    const countryTabs = document.getElementById("countryTabs");
+    const countriesAll = ["ALL","HK","JP","US","SG","AU"];
+    function renderCountryTabs() {
+      countryTabs.innerHTML = "";
+      countriesAll.forEach((c) => {
+        const btn = document.createElement("button");
+        btn.className = "px-3 py-1.5 rounded-full text-sm border transition " +
+          (state.country === c ? "bg-sky-600 text-white border-sky-600" : "bg-white hover:bg-slate-100");
+        btn.textContent = c === "ALL" ? "全部" : COUNTRY_NAMES[c];
+        btn.onclick = () => { state.country = c; renderAll(); };
+        countryTabs.appendChild(btn);
+      });
+    }
+
+    // Build selects
+    function initSelects() {
+      const typeSel = qs("type");
+      typeSel.innerHTML = '<option value="ALL">全部类型</option>' + TYPES.map(t=>`<option value="${t}">${t}</option>`).join("");
+      typeSel.onchange = (e)=>{ state.type = e.target.value; renderAll(); };
+
+      const catSel = qs("cat");
+      catSel.innerHTML = '<option value="ALL">全部商户类别</option>' + CATEGORIES.map(t=>`<option value="${t}">${t}</option>`).join("");
+      catSel.onchange = (e)=>{ state.cat = e.target.value; renderAll(); };
+
+      const qInput = qs("q");
+      qInput.oninput = (e)=>{ state.q = e.target.value.trim().toLowerCase(); renderAll(); };
+
+      const sortSel = qs("sort");
+      sortSel.onchange = (e)=>{ state.sortKey = e.target.value; renderAll(); };
+    }
+
+    function filterAndSort(items) {
+      let list = items.slice();
+      if (state.country !== "ALL") list = list.filter(o => o.country === state.country);
+      if (state.type !== "ALL") list = list.filter(o => o.type === state.type);
+      if (state.cat !== "ALL") list = list.filter(o => o.category === state.cat);
+      if (state.q) {
+        const s = state.q;
+        list = list.filter(o =>
+          o.title.toLowerCase().includes(s) ||
+          o.merchant.toLowerCase().includes(s) ||
+          o.summary.toLowerCase().includes(s)
+        );
+      }
+      if (state.sortKey === "ending") {
+        const end = o => (o.validTo ?? "9999-12-31");
+        list.sort((a,b)=> end(a).localeCompare(end(b)));
+      } else if (state.sortKey === "country") {
+        list.sort((a,b)=> a.country.localeCompare(b.country));
+      }
+      return list;
+    }
+
+    function offerCard(o) {
+      const card = document.createElement("div");
+      card.className = "group bg-white border rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition";
+
+      card.innerHTML = `
+        <div class="grid grid-cols-5 gap-0">
+          <a href="${o.link}" target="_blank" rel="noreferrer" class="col-span-5 md:col-span-2 block relative">
+            <img src="${o.image}" alt="${o.title}" loading="lazy" class="w-full h-full object-cover aspect-[4/3]" />
+            <span class="absolute left-2 top-2 inline-flex items-center gap-1 rounded-full bg-black/70 text-white px-2 py-1 text-[11px]">
+              <span>${COUNTRY_NAMES[o.country]}</span>
+              <span>·</span>
+              <span>${o.type}</span>
+            </span>
+          </a>
+          <div class="col-span-5 md:col-span-3 p-4 flex flex-col gap-2">
+            <div class="text-slate-500 text-xs">${o.category} · ${o.merchant}</div>
+            <a href="${o.link}" target="_blank" rel="noreferrer" class="text-base font-semibold leading-snug hover:text-sky-700">
+              ${o.title}
+            </a>
+            <div class="text-sm text-slate-700 line-clamp-3">${o.summary}</div>
+            <div class="mt-auto flex items-center justify-between pt-2">
+              <div class="text-xs text-slate-500">${o.validFrom} — ${o.validTo ?? "进行中"}</div>
+              <div class="flex items-center gap-2">
+                <button class="h-9 px-3 rounded-full border text-xs transition ${state.favs.has(o.id) ? "bg-yellow-400/20 border-yellow-500 text-yellow-700" : "hover:bg-slate-50"}" aria-pressed="${state.favs.has(o.id)}" data-action="fav" data-id="${o.id}">
+                  ${state.favs.has(o.id) ? "★ 已收藏" : "☆ 收藏"}
+                </button>
+                <button class="h-9 px-3 rounded-full border text-xs hover:bg-slate-50" data-action="share" data-id="${o.id}">分享</button>
+                <a href="${o.link}" target="_blank" rel="noreferrer" class="h-9 px-3 rounded-full bg-sky-600 text-white text-xs flex items-center">查看</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // wire up actions
+      card.querySelectorAll("[data-action='fav']").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const id = btn.getAttribute("data-id");
+          if (state.favs.has(id)) state.favs.delete(id); else state.favs.add(id);
+          renderAll(); // re-render to refresh button style/text
+        });
+      });
+      card.querySelectorAll("[data-action='share']").forEach(btn=>{
+        btn.addEventListener("click", async ()=>{
+          const id = btn.getAttribute("data-id");
+          const item = OFFERS.find(x=>x.id===id);
+          if (!item) return;
+          const text = `${item.title} · ${COUNTRY_NAMES[item.country]} — ${item.merchant}`;
+          try {
+            if (navigator.share) {
+              await navigator.share({ title: item.title, text, url: item.link });
+            } else if (navigator.clipboard) {
+              await navigator.clipboard.writeText(item.link);
+              alert("链接已复制到剪贴板");
+            } else {
+              // fallback: open link
+              window.open(item.link, "_blank", "noopener,noreferrer");
+            }
+          } catch {}
+        });
+      });
+
+      return card;
+    }
+
+    function renderCards() {
+      const mount = document.getElementById("cards");
+      mount.innerHTML = "";
+      const items = filterAndSort(OFFERS);
+      items.forEach(o => mount.appendChild(offerCard(o)));
+    }
+
+    function useDebugFlag() {
+      try {
+        const params = new URLSearchParams(window.location.search);
+        state.debug = params.get("debug") === "1";
+      } catch { state.debug = false; }
+    }
+
+    function runTests(items) {
+      const out = [];
+      out.push({ label: "总数=30", pass: items.length === 30, message: `got ${items.length}` });
+      const countries = ["HK","JP","US","SG","AU"];
+      countries.forEach(c=>{
+        const n = items.filter(x=>x.country===c).length;
+        out.push({ label: `国家 ${c} 数量=6`, pass: n===6, message: `got ${n}` });
+      });
+      const badImg = items.filter(x=> x.image !== img(x.id));
+      out.push({
+        label: "image=img(id) 一致性",
+        pass: badImg.length===0,
+        message: badImg.length ? `mismatch(${badImg.length}): ${badImg.map(b=>b.id).join(", ")}` : ""
+      });
+      countries.forEach(c=>{
+        const byCat = {};
+        items.filter(x=>x.country===c).forEach(x=> byCat[x.category]=(byCat[x.category]||0)+1 );
+        const viol = Object.entries(byCat).filter(([,v])=>v>3);
+        out.push({ label:`国家 ${c} 类目分布≤3/类`, pass: viol.length===0, message: JSON.stringify(viol) });
+      });
+      const badDate = items.filter(x => x.validTo && x.validFrom > x.validTo);
+      out.push({ label:"日期顺序有效（from<=to）", pass: badDate.length===0, message: badDate.map(b=>b.id).join(", ") });
+      return out;
+    }
+
+    function renderDevPanel() {
+      const mount = document.getElementById("devPanelMount");
+      if (!state.debug) { mount.innerHTML = ""; return; }
+      const tests = runTests(OFFERS);
+      mount.innerHTML = `
+        <div class="mx-auto max-w-7xl px-4 pb-3">
+          <div class="rounded-xl border bg-amber-50 text-amber-900 p-3 text-xs">
+            <div class="font-semibold mb-1">DEV · Data Checks</div>
+            <ul class="list-disc ml-5 space-y-1">
+              ${tests.map(t=>`
+                <li class="${t.pass ? "text-emerald-700" : "text-red-700"}">
+                  ${t.label} — ${t.pass ? "PASS" : `FAIL: ${t.message}`}
+                </li>
+              `).join("")}
+            </ul>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderAll() {
+      renderCountryTabs();
+      renderDevPanel();
+      renderCards();
+    }
+
+    // Init
+    (function init(){
+      useDebugFlag();
+      initSelects();
+      renderAll();
+    })();
+  </script>
+</body>
+</html>
