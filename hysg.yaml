@@ -1,0 +1,118 @@
+proxies:
+  - name: Hysteria2-1003
+    type: hysteria2
+    server: 35.240.181.193
+    port: 1003
+    auth_str: 123456
+    sni: www.bing.com
+    skip_cert_verify: true
+
+  - name: Hysteria2-1030
+    type: hysteria2
+    server: 35.240.181.193
+    port: 1030
+    auth_str: 123456
+    sni: www.bing.com
+    skip_cert_verify: true
+
+  - name: Hysteria2-1031
+    type: hysteria2
+    server: 35.240.181.193
+    port: 1031
+    auth_str: 123456
+    sni: www.bing.com
+    skip_cert_verify: true
+
+  - name: Hysteria2-1032
+    type: hysteria2
+    server: 35.240.181.193
+    port: 1032
+    auth_str: 123456
+    sni: www.bing.com
+    skip_cert_verify: true
+
+  - name: Hysteria2-1033
+    type: hysteria2
+    server: 35.240.181.193
+    port: 1033
+    auth_str: 123456
+    sni: www.bing.com
+    skip_cert_verify: true
+
+  - name: Hysteria2-1034
+    type: hysteria2
+    server: 35.240.181.193
+    port: 1034
+    auth_str: 123456
+    sni: www.bing.com
+    skip_cert_verify: true
+
+  - name: Hysteria2-1035
+    type: hysteria2
+    server: 35.240.181.193
+    port: 1035
+    auth_str: 123456
+    sni: www.bing.com
+    skip_cert_verify: true
+
+  - name: Hysteria2-1036
+    type: hysteria2
+    server: 35.240.181.193
+    port: 1036
+    auth_str: 123456
+    sni: www.bing.com
+    skip_cert_verify: true
+
+  - name: Hysteria2-1037
+    type: hysteria2
+    server: 35.240.181.193
+    port: 1037
+    auth_str: 123456
+    sni: www.bing.com
+    skip_cert_verify: true
+
+  - name: Hysteria2-1038
+    type: hysteria2
+    server: 35.240.181.193
+    port: 1038
+    auth_str: 123456
+    sni: www.bing.com
+    skip_cert_verify: true
+
+  - name: Hysteria2-1039
+    type: hysteria2
+    server: 35.240.181.193
+    port: 1039
+    auth_str: 123456
+    sni: www.bing.com
+    skip_cert_verify: true
+
+  - name: Hysteria2-1040
+    type: hysteria2
+    server: 35.240.181.193
+    port: 1040
+    auth_str: 123456
+    sni: www.bing.com
+    skip_cert_verify: true
+
+proxy-groups:
+  - name: 🔰 节点选择
+    type: select
+    proxies:
+      - Hysteria2-1003
+      - Hysteria2-1030
+      - Hysteria2-1031
+      - Hysteria2-1032
+      - Hysteria2-1033
+      - Hysteria2-1034
+      - Hysteria2-1035
+      - Hysteria2-1036
+      - Hysteria2-1037
+      - Hysteria2-1038
+      - Hysteria2-1039
+      - Hysteria2-1040
+      - DIRECT
+
+rules:
+  - MATCH,🔰 节点选择
+
