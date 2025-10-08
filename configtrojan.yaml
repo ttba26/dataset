@@ -1,0 +1,137 @@
+####################################
+# 创建者：v2rayse.com
+# 客户端：Clash
+# 创建时间：2024-02-10 07:22:34
+# 使用模版：V2RaySE 默认模版
+# 节点数量：3
+####################################
+mixed-port: 7890
+allow-lan: true
+log-level: info
+external-controller: 0.0.0.0:9090
+dns:
+  enabled: true
+  listen: 0.0.0.0:1053
+  ipv6: true
+  default-nameserver:
+    - 223.5.5.5
+    - 114.114.114.114
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  fake-ip-filter:
+    - '*.lan'
+    - '*.linksys.com'
+    - '*.linksyssmartwifi.com'
+    - swscan.apple.com
+    - mesu.apple.com
+    - '*.msftconnecttest.com'
+    - '*.msftncsi.com'
+    - time.*.com
+    - time.*.gov
+    - time.*.edu.cn
+    - time.*.apple.com
+    - time1.*.com
+    - time2.*.com
+    - time3.*.com
+    - time4.*.com
+    - time5.*.com
+    - time6.*.com
+    - time7.*.com
+    - ntp.*.com
+    - ntp.*.com
+    - ntp1.*.com
+    - ntp2.*.com
+    - ntp3.*.com
+    - ntp4.*.com
+    - ntp5.*.com
+    - ntp6.*.com
+    - ntp7.*.com
+    - '*.time.edu.cn'
+    - '*.ntp.org.cn'
+    - +.pool.ntp.org
+    - time1.cloud.tencent.com
+    - +.music.163.com
+    - '*.126.net'
+    - musicapi.taihe.com
+    - music.taihe.com
+    - songsearch.kugou.com
+    - trackercdn.kugou.com
+    - '*.kuwo.cn'
+    - api-jooxtt.sanook.com
+    - api.joox.com
+    - joox.com
+    - +.y.qq.com
+    - +.music.tc.qq.com
+    - aqqmusic.tc.qq.com
+    - +.stream.qqmusic.qq.com
+    - '*.xiami.com'
+    - +.music.migu.cn
+    - +.srv.nintendo.net
+    - +.stun.playstation.net
+    - xbox.*.microsoft.com
+    - +.xboxlive.com
+    - localhost.ptlogin2.qq.com
+    - proxy.golang.org
+    - stun.*.*
+    - stun.*.*.*
+    - '*.mcdn.bilivideo.cn'
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+  fallback-filter:
+    geoip: false
+    ipcidr:
+      - 240.0.0.0/4
+      - 0.0.0.0/32
+
+proxies:
+- name: us
+  type: trojan
+  server: us.ctt25.uk
+  port: 443
+  password: "123456"
+  udp: true
+  skip-cert-verify: true
+  network: tcp
+  sni: us.ctt25.uk
+  client-fingerprint: chrome
+- name: tw
+  type: trojan
+  server: tw.ctt25.uk
+  port: 443
+  password: "123456"
+  udp: true
+  skip-cert-verify: true
+  network: tcp
+  sni: tw.ctt25.uk
+  client-fingerprint: chrome
+- name: hk
+  type: trojan
+  server: hk.ctt25.uk
+  port: 443
+  password: "123456"
+  udp: true
+  skip-cert-verify: true
+  network: tcp
+  sni: hk.ctt25.uk
+  client-fingerprint: chrome
+- name: sg
+  type: trojan
+  server: sg.ctt25.uk
+  port: 443
+  password: "123456"
+  udp: true
+  skip-cert-verify: true
+  network: tcp
+  sni: sg.ctt25.uk
+  client-fingerprint: chrome
+- name: jp
+  type: trojan
+  server: jp.ctt25.uk
+  port: 443
+  password: "123456"
+  udp: true
+  skip-cert-verify: true
+  network: tcp
+  sni: jp.ctt25.uk
+  client-fingerprint: chrome
